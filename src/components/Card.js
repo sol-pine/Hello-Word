@@ -1,24 +1,34 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCheck, faXmark } from "@fortawesome/free-solid-svg-icons";
+import { useDispatch, useSelector } from "react-redux";
+import { deleteList, getList } from "../redux/CardSlice";
 
 function Card() {
+  const dispatch = useDispatch();
+  const wordList = useSelector((state) => state.Card.list);
+
+  useEffect(() => {
+    dispatch(getList());
+  }, []);
+  function checkWord() {}
+  const deleteWord = (id) => {
+    dispatch(deleteList(id));
+  };
+
   return (
     <>
-      <CardItem>
-        <BtnEdit>
-          <FontAwesomeIcon icon={faCheck} className="fa-xl" />
-        </BtnEdit>
-        <TextWrap>
-          <CardTitle>단어</CardTitle>
-          <br />
-          <CardMeaning>단어뜻</CardMeaning>
-        </TextWrap>
-        <BtnDelete>
-          <FontAwesomeIcon icon={faXmark} className="fa-xl" />
-        </BtnDelete>
-      </CardItem>
+      {wordList.map((list, idx) => {
+        return (
+          <CardItem key={idx}>
+            <BtnEdit onClick={checkWord()}>Check!</BtnEdit>
+            <TextWrap>
+              <CardTitle>{list.word}</CardTitle>
+              <CardMeaning>{list.mean}</CardMeaning>
+            </TextWrap>
+            <BtnDelete onClick={() => deleteWord(list.id)}>Delete!</BtnDelete>
+          </CardItem>
+        );
+      })}
     </>
   );
 }
@@ -35,45 +45,41 @@ const CardItem = styled.div`
   justify-content: center;
   align-items: center;
   /* background-color: ${(props) => (props.completed ? "#333" : "#fff")}; */
-  :hover {
-    box-shadow: rgba(0, 0, 0, 0.3) 0px 5px 15px 0px;
-  }
 `;
-
 const BtnEdit = styled.div`
+  font-family: "IBMPlexSansKR-Bold";
   position: absolute;
   top: 0;
   width: 260px;
-  height: 35px;
-  background: #cad7ff;
-  color: #103eff;
+  height: 40px;
+  background: #081d92;
+  color: #f9f9f9;
   border-top-left-radius: 15px;
   border-top-right-radius: 15px;
   display: flex;
   justify-content: center;
   align-items: center;
   :hover {
-    color: #cad7ff;
-    background: #103eff;
+    color: #25e282;
     cursor: pointer;
     transition: 0.1s ease;
   }
 `;
 const BtnDelete = styled.div`
+  font-family: "IBMPlexSansKR-Bold";
   position: absolute;
   bottom: 0;
   width: 260px;
-  height: 35px;
-  background: #cad7ff;
-  color: #103eff;
+  height: 40px;
+  background: #081d92;
+  color: #f9f9f9;
   border-bottom-left-radius: 15px;
   border-bottom-right-radius: 15px;
   display: flex;
   justify-content: center;
   align-items: center;
   :hover {
-    color: #cad7ff;
-    background: #103eff;
+    color: #25e282;
     cursor: pointer;
     transition: 0.1s ease;
   }
@@ -84,11 +90,13 @@ const TextWrap = styled.div`
 const CardTitle = styled.div`
   font-family: "IBMPlexSansKR-Bold";
   font-size: 28px;
+  text-align: center;
+  margin: 5px;
 `;
 
 const CardMeaning = styled.div`
   font-size: 18px;
-  text-align: left;
+  text-align: justify;
 `;
 
 export default Card;
