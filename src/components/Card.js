@@ -1,36 +1,31 @@
 import React from "react";
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faCircleCheck,
-  faCircleXmark,
-} from "@fortawesome/free-solid-svg-icons";
+import { faCheck, faXmark } from "@fortawesome/free-solid-svg-icons";
 
 function Card() {
   return (
     <>
       <CardItem>
-        <BtnWrap>
-          <BtnEdit>
-            <FontAwesomeIcon icon={faCircleCheck} className="fa-xl" />
-          </BtnEdit>
-          <BtnDelete>
-            <FontAwesomeIcon icon={faCircleXmark} className="fa-xl" />
-          </BtnDelete>
-        </BtnWrap>
-        <CardTitle>단어</CardTitle>
-        <br />
-        <CardText>
+        <BtnEdit>
+          <FontAwesomeIcon icon={faCheck} className="fa-xl" />
+        </BtnEdit>
+        <TextWrap>
+          <CardTitle>단어</CardTitle>
+          <br />
           <CardMeaning>단어뜻</CardMeaning>
-          <CardExample>단어예시</CardExample>
-        </CardText>
+        </TextWrap>
+        <BtnDelete>
+          <FontAwesomeIcon icon={faXmark} className="fa-xl" />
+        </BtnDelete>
       </CardItem>
     </>
   );
 }
+
 const CardItem = styled.div`
   width: 220px;
-  height: 220px;
+  height: 260px;
   border-radius: 20px;
   padding: 20px;
   background: #fff;
@@ -41,45 +36,59 @@ const CardItem = styled.div`
   align-items: center;
   /* background-color: ${(props) => (props.completed ? "#333" : "#fff")}; */
   :hover {
-    box-shadow: rgba(0, 0, 0, 0.5) 0px 5px 15px 0px;
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 5px 15px 0px;
   }
 `;
-const BtnWrap = styled.div`
-  display: flex;
-  position: absolute;
-  right: 20px;
-  top: 20px;
-`;
+
 const BtnEdit = styled.div`
-  margin-right: 10px;
+  position: absolute;
+  top: 0;
+  width: 260px;
+  height: 35px;
+  background: #cad7ff;
+  color: #103eff;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   :hover {
+    color: #cad7ff;
+    background: #103eff;
     cursor: pointer;
-    color: #081d92;
+    transition: 0.1s ease;
   }
 `;
 const BtnDelete = styled.div`
+  position: absolute;
+  bottom: 0;
+  width: 260px;
+  height: 35px;
+  background: #cad7ff;
+  color: #103eff;
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   :hover {
+    color: #cad7ff;
+    background: #103eff;
     cursor: pointer;
-    color: #081d92;
+    transition: 0.1s ease;
   }
+`;
+const TextWrap = styled.div`
+  height: 200px;
 `;
 const CardTitle = styled.div`
   font-family: "IBMPlexSansKR-Bold";
   font-size: 28px;
-  color: #111;
 `;
-const CardText = styled.div`
-  width: 200px;
-  height: 100px;
-`;
+
 const CardMeaning = styled.div`
   font-size: 18px;
   text-align: left;
-`;
-const CardExample = styled.div`
-  font-size: 18px;
-  text-align: left;
-  color: #081d92;
 `;
 
 export default Card;
