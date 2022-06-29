@@ -11,7 +11,6 @@ function Card() {
   useEffect(() => {
     dispatch(getList());
   }, []);
-  console.log(wordList);
   // 단어 삭제
   const deleteWord = (id) => {
     dispatch(deleteList(id));
@@ -25,13 +24,20 @@ function Card() {
     <>
       {wordList.map((list, idx) => {
         return (
-          <CardItem key={idx}>
-            <BtnEdit onClick={() => checkWord(list)}>Check!</BtnEdit>
+          <CardItem key={idx} completed={list.completed}>
+            <BtnEdit onClick={() => checkWord(list)} completed={list.completed}>
+              Check!
+            </BtnEdit>
             <TextWrap>
-              <CardTitle>{list.word}</CardTitle>
-              <CardMeaning>{list.mean}</CardMeaning>
+              <CardTitle completed={list.completed}>{list.word}</CardTitle>
+              <CardMeaning completed={list.completed}>{list.mean}</CardMeaning>
             </TextWrap>
-            <BtnDelete onClick={() => deleteWord(list.id)}>Delete!</BtnDelete>
+            <BtnDelete
+              onClick={() => deleteWord(list.id)}
+              completed={list.completed}
+            >
+              Delete!
+            </BtnDelete>
           </CardItem>
         );
       })}
@@ -44,13 +50,12 @@ const CardItem = styled.div`
   height: 260px;
   border-radius: 20px;
   padding: 20px;
-  background: #fff;
   position: relative;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  /* background-color: ${(props) => (props.completed ? "#333" : "#fff")}; */
+  background-color: ${(props) => (props.completed ? "#222" : "#fff")};
 `;
 const BtnEdit = styled.div`
   font-family: "IBMPlexSansKR-Bold";
@@ -58,15 +63,15 @@ const BtnEdit = styled.div`
   top: 0;
   width: 260px;
   height: 40px;
-  background: #081d92;
-  color: #f9f9f9;
+  background: #222;
+  color: ${(props) => (props.completed ? "#25e282" : "#f9f9f9")};
   border-top-left-radius: 15px;
   border-top-right-radius: 15px;
   display: flex;
   justify-content: center;
   align-items: center;
   :hover {
-    color: #25e282;
+    color: ${(props) => (props.completed ? "#f9f9f9" : "#25e282")};
     cursor: pointer;
     transition: 0.1s ease;
   }
@@ -77,15 +82,15 @@ const BtnDelete = styled.div`
   bottom: 0;
   width: 260px;
   height: 40px;
-  background: #081d92;
-  color: #f9f9f9;
+  background: #222;
+  color: ${(props) => (props.completed ? "#25e282" : "#f9f9f9")};
   border-bottom-left-radius: 15px;
   border-bottom-right-radius: 15px;
   display: flex;
   justify-content: center;
   align-items: center;
   :hover {
-    color: #25e282;
+    color: ${(props) => (props.completed ? "#f9f9f9" : "#25e282")};
     cursor: pointer;
     transition: 0.1s ease;
   }
@@ -98,11 +103,15 @@ const CardTitle = styled.div`
   font-size: 28px;
   text-align: center;
   margin: 5px;
+
+  color: ${(props) => (props.completed ? "#25e282" : "#222")};
 `;
 
 const CardMeaning = styled.div`
   font-size: 18px;
   text-align: justify;
+
+  color: ${(props) => (props.completed ? "#25e282" : "#222")};
 `;
 
 export default Card;

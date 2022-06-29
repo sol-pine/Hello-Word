@@ -85,17 +85,17 @@ function Main() {
 const Header = styled.div`
   width: 100%;
   height: 65px;
-  background: #081d92;
+  background: #fff;
   font-family: "IBMPlexSansKR-Bold";
   font-size: 25px;
-  color: #25e282;
+  color: #222;
   display: flex;
   align-items: center;
   justify-content: center;
   position: fixed;
   top: 0;
   z-index: 10;
-  box-shadow: rgba(0, 0, 0, 0.3) 0px 5px 15px 0px;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 8px 0px;
   :hover {
     cursor: pointer;
   }
@@ -105,6 +105,18 @@ const CardContainer = styled.div`
   grid-template-columns: repeat(4, 260px);
   grid-template-rows: repeat(4, 300px);
   gap: 20px;
+  @media (max-width: 1105px) {
+    grid-template-columns: repeat(3, 260px);
+    grid-template-rows: repeat(4, 300px);
+  }
+  @media (max-width: 825px) {
+    grid-template-columns: repeat(2, 260px);
+    grid-template-rows: repeat(4, 300px);
+  }
+  @media (max-width: 560px) {
+    grid-template-columns: repeat(1, 260px);
+    grid-template-rows: repeat(4, 300px);
+  }
   margin-top: 130px;
   justify-content: center;
   align-items: center;
@@ -119,11 +131,12 @@ const Background = styled.div`
   left: 0;
   bottom: 0;
   right: 0;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.7);
   z-index: 3;
 `;
 const Modal = styled.div`
   font-family: "IBMPlexSansKR-Bold";
+  color: #222;
   position: absolute;
   width: 450px;
   height: 300px;
@@ -157,7 +170,7 @@ const Btn = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  background: #00092d;
+  background: #222;
   color: #f9f9f9;
   margin: 20px;
   :hover {

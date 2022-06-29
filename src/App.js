@@ -1,6 +1,6 @@
 // Vocabulary
 // personal practice
-// 수정일자: 22/6/28
+// 최종일자: 22/6/29
 import React from "react";
 import "./App.css";
 import { Route, Routes } from "react-router-dom";

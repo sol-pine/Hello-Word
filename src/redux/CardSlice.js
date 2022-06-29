@@ -31,33 +31,52 @@ export const addList = createAsyncThunk("ADD_CARD", async (newWord) => {
     date: Date.now(),
     completed: false,
   });
+  let words = [];
+  const query = await getDocs(collection(db, "words"));
+  query.forEach((doc) => {
+    words = [...words, { id: doc.id, ...doc.data() }];
+    words.sort(function (a, b) {
+      return b.date - a.date;
+    });
+  });
+  return words;
 });
 
 // DELETE
 export const deleteList = createAsyncThunk("DELETE_CARD", async (id) => {
   await deleteDoc(doc(db, "words", id));
+  alert("단어를 삭제했습니다!");
+  let words = [];
+  const query = await getDocs(collection(db, "words"));
+  query.forEach((doc) => {
+    words = [...words, { id: doc.id, ...doc.data() }];
+    words.sort(function (a, b) {
+      return b.date - a.date;
+    });
+  });
+  return words;
 });
 
 // CHECK
 export const checkList = createAsyncThunk("CHECK_LIST", async (list) => {
   const wordRef = doc(db, "words", list.id);
-  console.log(list.id, list.completed);
   await updateDoc(wordRef, {
     completed: !list.completed,
   });
-  return list;
+  let words = [];
+  const query = await getDocs(collection(db, "words"));
+  query.forEach((doc) => {
+    words = [...words, { id: doc.id, ...doc.data() }];
+    words.sort(function (a, b) {
+      return b.date - a.date;
+    });
+  });
+  return words;
 });
 const CardSlice = createSlice({
   name: "CardSlice",
   initialState: {
-    list: [
-      {
-        completed: false,
-        date: 0,
-        mean: "",
-        word: "",
-      },
-    ],
+    list: [],
   },
   reducers: {},
   extraReducers: {
@@ -65,15 +84,13 @@ const CardSlice = createSlice({
       state.list = [...action.payload];
     },
     [deleteList.fulfilled]: (state, action) => {
-      state.list.filter((list) => list.id !== action.payload);
-      window.location.reload();
+      state.list = [...action.payload];
     },
     [addList.fulfilled]: (state, action) => {
-      window.location.reload();
+      state.list = [...action.payload];
     },
     [checkList.fulfilled]: (state, action) => {
-      state.list = [...state.list];
-      window.location.reload();
+      state.list = [...action.payload];
     },
   },
 });
