@@ -4,7 +4,7 @@
 개발을 시작하는 사람들을 위한 개발 용어 사전
 
 # 💪 목적
-https://user-images.githubusercontent.com/105091138/176493391-f323c585-9420-49ae-933f-66f786fe4aad.mov
+https://user-images.githubusercontent.com/105091138/176498676-ce64a042-1d9a-4d1d-aeed-4a877b307eea.mov
 - 리액트 동적 UI 모달 구현
 - 미디어쿼리를 이용해 반응형으로 제작
 - Redux Toolkit, AsyncThunk 로 전역 상태 관리
