@@ -1,18 +1,24 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteList, getList } from "../redux/CardSlice";
+import { checkList, deleteList, getList } from "../redux/CardSlice";
 
 function Card() {
   const dispatch = useDispatch();
   const wordList = useSelector((state) => state.Card.list);
 
+  // 단어 로드
   useEffect(() => {
     dispatch(getList());
   }, []);
-  function checkWord() {}
+  console.log(wordList);
+  // 단어 삭제
   const deleteWord = (id) => {
     dispatch(deleteList(id));
+  };
+  // 단어 체크
+  const checkWord = (list) => {
+    dispatch(checkList(list));
   };
 
   return (
@@ -20,7 +26,7 @@ function Card() {
       {wordList.map((list, idx) => {
         return (
           <CardItem key={idx}>
-            <BtnEdit onClick={checkWord()}>Check!</BtnEdit>
+            <BtnEdit onClick={() => checkWord(list)}>Check!</BtnEdit>
             <TextWrap>
               <CardTitle>{list.word}</CardTitle>
               <CardMeaning>{list.mean}</CardMeaning>

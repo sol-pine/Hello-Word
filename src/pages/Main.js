@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -8,11 +8,23 @@ import { addList } from "../redux/CardSlice";
 
 function Main() {
   const dispatch = useDispatch();
+
   const [modal, setModal] = useState(false);
   const [msg, setMsg] = useState("HELLO WORD!");
+
+  const wordRef = useRef(null);
+  const meanRef = useRef(null);
+
+  // 단어 추가
   function addWord() {
-    dispatch(addList());
+    const newWord = {
+      word: wordRef.current.value,
+      mean: meanRef.current.value,
+    };
+    dispatch(addList(newWord));
+    setModal(false);
   }
+
   return (
     <>
       <Header
@@ -33,8 +45,16 @@ function Main() {
           <Background>
             <Modal>
               <p>새롭게 알게 된 단어를 기록해보세요 ✍️</p>
-              <input type="text" placeholder="단어를 입력하세요"></input>
-              <input type="text" placeholder="뜻을 입력하세요"></input>
+              <input
+                type="text"
+                placeholder="단어를 입력하세요"
+                ref={wordRef}
+              ></input>
+              <input
+                type="text"
+                placeholder="뜻을 입력하세요"
+                ref={meanRef}
+              ></input>
               <BtnWrap>
                 <Btn
                   onClick={() => {
